@@ -1,0 +1,749 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost Accounting: Relevant Costs & Income Statements - Premium Quizzes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F4F7F6;
+            --surface: #FFFFFF;
+            --primary: #0F172A;      
+            --secondary: #334155;    
+            --accent: #C5A059;       
+            --accent-light: rgba(197, 160, 89, 0.1);
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --success: #059669;
+            --success-bg: rgba(5, 150, 105, 0.1);
+            --error: #DC2626;
+            --error-bg: rgba(220, 38, 38, 0.1);
+            --border: #E2E8F0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            --radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        body[dir="rtl"] { font-family: 'Cairo', sans-serif; }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%);
+            color: white;
+            padding: 2.5rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand { display: flex; flex-direction: column; text-align: center; }
+
+        .brand h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        body[dir="rtl"] .brand h1 { font-family: 'Cairo', sans-serif; font-size: 1.8rem; }
+
+        .brand span {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .fab-translate {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%);
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 0 15px rgba(197, 160, 89, 0.2);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        [dir="rtl"] .fab-translate {
+            right: auto;
+            left: 30px;
+        }
+
+        .fab-translate:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 25px rgba(197, 160, 89, 0.4);
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .fab-icon {
+            font-size: 1.5rem;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .fab-translate.animate .fab-icon {
+            transform: rotate(360deg) scale(1.2);
+        }
+
+        .fab-tooltip {
+            position: absolute;
+            right: 75px;
+            background: var(--primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateX(10px);
+        }
+
+        [dir="rtl"] .fab-tooltip {
+            right: auto;
+            left: 75px;
+            transform: translateX(-10px);
+        }
+
+        .fab-translate:hover .fab-tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .tabs-wrapper { margin-top: -30px; margin-bottom: 40px; position: relative; z-index: 2; }
+        .tabs { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+        .tab-btn {
+            padding: 14px 40px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tab-btn:hover { color: var(--primary); border-color: var(--accent); }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+        }
+
+        .quiz-container {
+            background: var(--surface);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 60px;
+            border: 1px solid var(--border);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .quiz-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 40px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        body[dir="rtl"] .quiz-title { font-family: 'Cairo', sans-serif; }
+
+        .quiz-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .question-block {
+            margin-bottom: 32px;
+            padding: 28px;
+            background: #FAFCFC;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .question-block:hover { border-color: #CBD5E1; box-shadow: var(--shadow-sm); }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        body[dir="rtl"] .question-number { margin-right: 0; margin-left: 12px; }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .options { display: flex; flex-direction: column; gap: 12px; }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-card:hover { border-color: var(--accent); background: var(--accent-light); transform: translateX(4px); }
+        body[dir="rtl"] .option-card:hover { transform: translateX(-4px); }
+
+        .option-card.selected { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 4px 12px rgba(197, 160, 89, 0.15); }
+        .option-card input[type="radio"] { display: none; }
+
+        .custom-radio {
+            width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 50%;
+            margin-right: 15px; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); flex-shrink: 0;
+        }
+
+        body[dir="rtl"] .custom-radio { margin-right: 0; margin-left: 15px; }
+        .option-card.selected .custom-radio { border-color: var(--accent); background: var(--accent); }
+        .option-card.selected .custom-radio::after { content: ''; width: 8px; height: 8px; background: white; border-radius: 50%; }
+        .option-text { font-size: 0.95rem; color: var(--text-main); font-weight: 500; }
+
+        .option-card.correct { border-color: var(--success) !important; background: var(--success-bg) !important; }
+        .option-card.correct .custom-radio { border-color: var(--success); background: var(--success); }
+        .option-card.incorrect { border-color: var(--error) !important; background: var(--error-bg) !important; }
+        .option-card.incorrect .custom-radio { border-color: var(--error); background: var(--error); }
+
+        .explanation-box {
+            margin-top: 20px; padding: 18px 20px; background: #FFFBF0;
+            border-left: 4px solid var(--accent); border-radius: 8px;
+            display: none; opacity: 0; transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .explanation-box.show { display: block; opacity: 1; transform: translateY(0); }
+        [dir="rtl"] .explanation-box { border-left: none; border-right: 4px solid var(--accent); }
+
+        .explanation-header { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary); margin-bottom: 8px; font-size: 0.95rem; }
+        .explanation-icon { color: var(--accent); font-size: 1.1rem; }
+        .explanation-text { color: var(--secondary); font-size: 0.92rem; line-height: 1.7; }
+
+        .submit-btn {
+            display: block; width: 100%; padding: 18px;
+            background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%);
+            color: white; border: none; border-radius: 12px; font-size: 1.1rem;
+            font-weight: 600; cursor: pointer; margin-top: 30px; transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+        }
+
+        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(15, 23, 42, 0.3); }
+
+        .result-box {
+            margin-top: 30px; padding: 30px; border-radius: 12px; text-align: center;
+            display: none; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        .result-box.correct { background: linear-gradient(135deg, rgba(5, 150, 105, 0.05), rgba(5, 150, 105, 0.1)); border: 1px solid var(--success); }
+        .result-box.incorrect { background: linear-gradient(135deg, rgba(220, 38, 38, 0.05), rgba(220, 38, 38, 0.1)); border: 1px solid var(--error); }
+        .score-display { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+        .result-box.correct .score-display { color: var(--success); }
+        .result-box.incorrect .score-display { color: var(--error); }
+        .result-msg { font-size: 1.1rem; color: var(--text-muted); font-weight: 500; }
+
+        footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px; }
+
+        @media (max-width: 768px) {
+            .brand h1 { font-size: 1.5rem; }
+            .quiz-container { padding: 24px; }
+            .question-block { padding: 20px; }
+            .fab-translate { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+            [dir="rtl"] .fab-translate { left: 20px; right: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="brand">
+            <h1 id="main-title">Cost Accounting</h1>
+            <span id="sub-title">Relevant Costs & Income Statements</span>
+        </div>
+    </div>
+</header>
+
+<button class="fab-translate" id="fab-translate" onclick="toggleLanguage(this)">
+    <span class="fab-icon">🌐</span>
+    <span class="fab-tooltip" id="fab-tooltip">Translate to العربية</span>
+</button>
+
+<div class="container">
+    <div class="tabs-wrapper">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchQuiz(0)" id="tab-0">Quiz 1</button>
+            <button class="tab-btn" onclick="switchQuiz(1)" id="tab-1">Quiz 2</button>
+        </div>
+    </div>
+
+    <div class="quiz-container">
+        <h2 class="quiz-title" id="quiz-title"></h2>
+        <form id="quiz-form"></form>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+        <div class="result-box" id="result-box">
+            <div class="score-display" id="score-display"></div>
+            <div class="result-msg" id="result-msg"></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p id="footer-text">Based on Official Course Material for Cost Accounting</p>
+</footer>
+
+<script>
+    let currentLang = 'en';
+    let currentQuizIndex = 0;
+    
+    let userAnswers = {}; 
+    let quizSubmitted = {}; 
+
+    const translations = {
+        en: {
+            mainTitle: "Cost Accounting", subTitle: "Relevant Costs & Income Statements",
+            fabTooltip: "Translate to العربية", submitBtn: "Submit Answers",
+            footer: "Based on Official Course Material for Cost Accounting",
+            resultCorrect: "Outstanding! You have mastered this section.",
+            resultIncorrect: "Good effort. Review the explanations below and try again.",
+            explainTitle: "Explanation"
+        },
+        ar: {
+            mainTitle: "محاسبة التكاليف", subTitle: "التكاليف ذات الصلة وقوائم الدخل",
+            fabTooltip: "Translate to English", submitBtn: "إرسال الإجابات",
+            footer: "بناءً على المادة العلمية الرسمية لمقرر محاسبة التكاليف",
+            resultCorrect: "أداء ممتاز! لقد أتقنت هذا القسم.",
+            resultIncorrect: "جهد جيد. راجع الشرح أدناه وحاول مرة أخرى.",
+            explainTitle: "الشرح"
+        }
+    };
+
+    const quizzes = [
+        {
+            title: { en: "Quiz 1: Cost Concepts & Behavior", ar: "الاختبار الأول: مفاهيم التكلفة وسلوكها" },
+            questions: [
+                { q: { en: "A cost that has already been incurred and cannot be changed by any future decision is called a:", ar: "التكلفة التي تم تكبدها بالفعل ولا يمكن تغييرها بأي قرار مستقبلي تسمى:" }, options: [ { en: "Relevant cost", ar: "تكلفة ذات صلة" }, { en: "Avoidable cost", ar: "تكلفة قابلة للتجنب" }, { en: "Sunk cost", ar: "تكلفة غارقة" }, { en: "Variable cost", ar: "تكلفة متغيرة" } ], answer: 2, explanation: { en: "A sunk cost is a cost that has already been incurred in the past and cannot be changed by any decision made now or in the future. It is irrelevant for decision-making.", ar: "التكلفة الغارقة (Sunk cost) هي تكلفة تم تكبدها في الماضي ولا يمكن تغييرها بأي قرار يُتخذ الآن أو في المستقبل. وهي غير ذات صلة باتخاذ القرار." } },
+                { q: { en: "Which of the following is an example of a Sunk Cost?", ar: "أي مما يلي يعتبر مثالاً على التكلفة الغارقة؟" }, options: [ { en: "Future raw material purchases", ar: "مشتريات المواد الخام المستقبلية" }, { en: "Depreciation on an old machine already purchased", ar: "الإهلاك على آلة قديمة تم شراؤها بالفعل" }, { en: "Direct labor for next month's production", ar: "العمالة المباشرة لإنتاج الشهر القادم" }, { en: "Variable selling commissions", ar: "عمولات البيع المتغيرة" } ], answer: 1, explanation: { en: "The book value of an old machine already purchased is a sunk cost because the expenditure has already been made and cannot be recovered.", ar: "القيمة الدفترية لآلة قديمة تم شراؤها بالفعل هي تكلفة غارقة لأن الإنفاق قد تم بالفعل ولا يمكن استرداده." } },
+                { q: { en: "Relevant costs are defined as costs that:", ar: "تُعرّف التكاليف ذات الصلة بأنها التكاليف التي:" }, options: [ { en: "Are always fixed in nature", ar: "ثابتة دائماً في طبيعتها" }, { en: "Differ between alternatives and affect the decision", ar: "تختلف بين البدائل وتؤثر على القرار" }, { en: "Have already been incurred", ar: "تم تكبدها بالفعل" }, { en: "Are always variable", ar: "متغيرة دائماً" } ], answer: 1, explanation: { en: "Relevant costs are future costs that differ between alternatives. They are the costs that will change depending on which decision is made.", ar: "التكاليف ذات الصلة هي تكاليف مستقبلية تختلف بين البدائل. وهي التكاليف التي ستتغير اعتماداً على القرار المتخذ." } },
+                { q: { en: "An avoidable cost is:", ar: "التكلفة القابلة للتجنب هي:" }, options: [ { en: "A cost that can be eliminated by choosing one alternative over another", ar: "تكلفة يمكن إلغاؤها عن طريق اختيار بديل على آخر" }, { en: "A cost that has already been paid", ar: "تكلفة تم دفعها بالفعل" }, { en: "A cost that is the same for all alternatives", ar: "تكلفة متساوية لجميع البدائل" }, { en: "A sunk cost", ar: "تكلفة غارقة" } ], answer: 0, explanation: { en: "An avoidable cost is a cost that can be eliminated (in whole or in part) by choosing one alternative over another. It is relevant for decision-making.", ar: "التكلفة القابلة للتجنب هي تكلفة يمكن إلغاؤها (كلياً أو جزئياً) عن طريق اختيار بديل على آخر. وهي ذات صلة باتخاذ القرار." } },
+                { q: { en: "Which of the following costs is typically irrelevant for decision-making?", ar: "أي من التكاليف التالية تعتبر غير ذات صلة عادةً باتخاذ القرار؟" }, options: [ { en: "Future direct materials", ar: "المواد المباشرة المستقبلية" }, { en: "Sunk costs", ar: "التكاليف الغارقة" }, { en: "Avoidable fixed costs", ar: "التكاليف الثابتة القابلة للتجنب" }, { en: "Incremental revenue", ar: "الإيرادات الإضافية" } ], answer: 1, explanation: { en: "Sunk costs are irrelevant because they have already been incurred and cannot be changed by any current or future decision.", ar: "التكاليف الغارقة غير ذات صلة لأنها تم تكبدها بالفعل ولا يمكن تغييرها بأي قرار حالي أو مستقبلي." } },
+                { q: { en: "A cost that remains constant in total regardless of changes in activity level is called a:", ar: "التكلفة التي تبقى ثابتة في إجماليها بغض النظر عن التغيرات في مستوى النشاط تسمى:" }, options: [ { en: "Variable cost", ar: "تكلفة متغيرة" }, { en: "Mixed cost", ar: "تكلفة مختلطة" }, { en: "Fixed cost", ar: "تكلفة ثابتة" }, { en: "Step cost", ar: "تكلفة متدرجة" } ], answer: 2, explanation: { en: "A fixed cost remains constant in total within the relevant range, regardless of changes in activity level (e.g., factory rent).", ar: "التكلفة الثابتة تبقى ثابتة في إجماليها ضمن النطاق ذي الصلة، بغض النظر عن التغيرات في مستوى النشاط (مثل إيجار المصنع)." } },
+                { q: { en: "A cost that changes in total in direct proportion to changes in activity level is a:", ar: "التكلفة التي تتغير في إجماليها بشكل مباشر مع التغيرات في مستوى النشاط هي:" }, options: [ { en: "Fixed cost", ar: "تكلفة ثابتة" }, { en: "Variable cost", ar: "تكلفة متغيرة" }, { en: "Sunk cost", ar: "تكلفة غارقة" }, { en: "Committed cost", ar: "تكلفة ملتزم بها" } ], answer: 1, explanation: { en: "A variable cost changes in total in direct proportion to changes in activity level (e.g., direct materials).", ar: "التكلفة المتغيرة تتغير في إجماليها بشكل مباشر مع التغيرات في مستوى النشاط (مثل المواد المباشرة)." } },
+                { q: { en: "As production volume increases, the fixed cost per unit:", ar: "مع زيادة حجم الإنتاج، التكلفة الثابتة للوحدة:" }, options: [ { en: "Increases", ar: "تزداد" }, { en: "Decreases", ar: "تنخفض" }, { en: "Remains constant", ar: "تبقى ثابتة" }, { en: "Becomes zero", ar: "تصبح صفراً" } ], answer: 1, explanation: { en: "As production volume increases, the total fixed cost is spread over more units, so the fixed cost per unit decreases.", ar: "مع زيادة حجم الإنتاج، يتم توزيع إجمالي التكلفة الثابتة على وحدات أكثر، لذا تنخفض التكلفة الثابتة للوحدة." } },
+                { q: { en: "As production volume increases, the variable cost per unit:", ar: "مع زيادة حجم الإنتاج، التكلفة المتغيرة للوحدة:" }, options: [ { en: "Increases", ar: "تزداد" }, { en: "Decreases", ar: "تنخفض" }, { en: "Remains constant", ar: "تبقى ثابتة" }, { en: "Becomes zero", ar: "تصبح صفراً" } ], answer: 2, explanation: { en: "The variable cost per unit remains constant regardless of the production volume. Only the total variable cost changes.", ar: "التكلفة المتغيرة للوحدة تبقى ثابتة بغض النظر عن حجم الإنتاج. فقط إجمالي التكلفة المتغيرة يتغير." } },
+                { q: { en: "A mixed cost contains:", ar: "التكلفة المختلطة تحتوي على:" }, options: [ { en: "Only fixed elements", ar: "عناصر ثابتة فقط" }, { en: "Only variable elements", ar: "عناصر متغيرة فقط" }, { en: "Both fixed and variable elements", ar: "عناصر ثابتة ومتغيرة معاً" }, { en: "No cost elements", ar: "لا عناصر تكلفة" } ], answer: 2, explanation: { en: "A mixed cost (also called semi-variable cost) contains both a fixed component and a variable component (e.g., utilities with a base fee plus usage charges).", ar: "التكلفة المختلطة (وتسمى أيضاً شبه المتغيرة) تحتوي على عنصر ثابت وعنصر متغير (مثل المرافق التي لها رسوم أساسية بالإضافة إلى رسوم الاستخدام)." } },
+                { q: { en: "The Cost Accounting Information System provides information primarily to:", ar: "نظام معلومات محاسبة التكاليف يوفر المعلومات بشكل أساسي إلى:" }, options: [ { en: "External shareholders only", ar: "المساهمين الخارجيين فقط" }, { en: "Internal managers for planning, controlling, and decision-making", ar: "المديرين الداخليين للتخطيط والرقابة واتخاذ القرار" }, { en: "Government tax authorities", ar: "السلطات الضريبية الحكومية" }, { en: "Customers and suppliers", ar: "العملاء والموردين" } ], answer: 1, explanation: { en: "The Cost Accounting Information System provides detailed cost information to internal managers to help them plan, control operations, and make decisions.", ar: "نظام معلومات محاسبة التكاليف يوفر معلومات تكلفة مفصلة للمديرين الداخليين لمساعدتهم في التخطيط والرقابة على العمليات واتخاذ القرارات." } },
+                { q: { en: "A Weekly Report in cost accounting is used to:", ar: "يُستخدم التقرير الأسبوعي في محاسبة التكاليف لـ:" }, options: [ { en: "Communicate with external investors", ar: "التواصل مع المستثمرين الخارجيين" }, { en: "Compare budgeted vs actual costs and identify variances", ar: "مقارنة التكاليف المخططة مقابل الفعلية وتحديد الانحرافات" }, { en: "Calculate income tax", ar: "حساب ضريبة الدخل" }, { en: "Replace financial statements", ar: "استبدال القوائم المالية" } ], answer: 1, explanation: { en: "Weekly reports compare budgeted data to actual data to identify variances and help management take corrective actions.", ar: "التقارير الأسبوعية تقارن البيانات المخططة بالبيانات الفعلية لتحديد الانحرافات ومساعدة الإدارة في اتخاذ الإجراءات التصحيحية." } },
+                { q: { en: "In a cost accounting system, the 'Outputs' include:", ar: "في نظام محاسبة التكاليف، تشمل 'المخرجات':" }, options: [ { en: "Raw materials and direct labor", ar: "المواد الخام والعمالة المباشرة" }, { en: "Reports used by managers for decisions", ar: "التقارير المستخدمة من قبل المديرين لاتخاذ القرارات" }, { en: "Only financial statements", ar: "القوائم المالية فقط" }, { en: "Tax returns", ar: "الإقرارات الضريبية" } ], answer: 1, explanation: { en: "The outputs of the cost accounting system are reports (weekly, final, performance reports) that provide information to managers for decision-making.", ar: "مخرجات نظام محاسبة التكاليف هي التقارير (الأسبوعية، النهائية، تقارير الأداء) التي توفر المعلومات للمديرين لاتخاذ القرارات." } },
+                { q: { en: "Which of the following is an example of a Variable Cost?", ar: "أي مما يلي يعتبر مثالاً على التكلفة المتغيرة؟" }, options: [ { en: "Factory rent", ar: "إيجار المصنع" }, { en: "Direct materials used in production", ar: "المواد المباشرة المستخدمة في الإنتاج" }, { en: "Depreciation on factory building", ar: "إهلاك مبنى المصنع" }, { en: "Plant manager's salary", ar: "راتب مدير المصنع" } ], answer: 1, explanation: { en: "Direct materials are a variable cost because they change in total in direct proportion to the number of units produced.", ar: "المواد المباشرة هي تكلفة متغيرة لأنها تتغير في إجماليها بشكل مباشر مع عدد الوحدات المنتجة." } },
+                { q: { en: "Which of the following is an example of a Fixed Cost?", ar: "أي مما يلي يعتبر مثالاً على التكلفة الثابتة؟" }, options: [ { en: "Direct labor wages", ar: "أجور العمالة المباشرة" }, { en: "Sales commissions", ar: "عمولات المبيعات" }, { en: "Factory rent", ar: "إيجار المصنع" }, { en: "Packaging materials", ar: "مواد التغليف" } ], answer: 2, explanation: { en: "Factory rent is a fixed cost because it remains constant in total regardless of the production volume.", ar: "إيجار المصنع هو تكلفة ثابتة لأنه يبقى ثابتاً في إجماليه بغض النظر عن حجم الإنتاج." } },
+                { q: { en: "If a company produces 1,000 units and total fixed costs are $10,000, what is the fixed cost per unit?", ar: "إذا أنتجت الشركة 1,000 وحدة وإجمالي التكاليف الثابتة 10,000 دولار، ما هي التكلفة الثابتة للوحدة؟" }, options: [ { en: "$100", ar: "100 دولار" }, { en: "$10", ar: "10 دولار" }, { en: "$1,000", ar: "1,000 دولار" }, { en: "$5", ar: "5 دولار" } ], answer: 1, explanation: { en: "Fixed cost per unit = Total fixed costs / Number of units = 10,000 / 1,000 = $10 per unit.", ar: "التكلفة الثابتة للوحدة = إجمالي التكاليف الثابتة / عدد الوحدات = 10000 / 1000 = 10 دولار للوحدة." } },
+                { q: { en: "If production increases to 2,000 units (from 1,000) and total fixed costs remain $10,000, what is the new fixed cost per unit?", ar: "إذا زاد الإنتاج إلى 2,000 وحدة (من 1,000) وبقي إجمالي التكاليف الثابتة 10,000 دولار، ما هي التكلفة الثابتة الجديدة للوحدة؟" }, options: [ { en: "$10", ar: "10 دولار" }, { en: "$5", ar: "5 دولار" }, { en: "$20", ar: "20 دولار" }, { en: "$15", ar: "15 دولار" } ], answer: 1, explanation: { en: "Fixed cost per unit = 10,000 / 2,000 = $5 per unit. As volume increases, fixed cost per unit decreases.", ar: "التكلفة الثابتة للوحدة = 10000 / 2000 = 5 دولار للوحدة. مع زيادة الحجم، تنخفض التكلفة الثابتة للوحدة." } },
+                { q: { en: "If variable cost per unit is $8, what is the total variable cost for 500 units?", ar: "إذا كانت التكلفة المتغيرة للوحدة 8 دولار، ما هي إجمالي التكلفة المتغيرة لـ 500 وحدة؟" }, options: [ { en: "$800", ar: "800 دولار" }, { en: "$4,000", ar: "4,000 دولار" }, { en: "$500", ar: "500 دولار" }, { en: "$2,000", ar: "2,000 دولار" } ], answer: 1, explanation: { en: "Total variable cost = Variable cost per unit × Number of units = 8 × 500 = $4,000.", ar: "إجمالي التكلفة المتغيرة = التكلفة المتغيرة للوحدة × عدد الوحدات = 8 × 500 = 4,000 دولار." } },
+                { q: { en: "Which of the following is NOT a relevant cost for a special order decision?", ar: "أي مما يلي ليس تكلفة ذات صلة لقرار طلب خاص؟" }, options: [ { en: "Direct materials for the order", ar: "المواد المباشرة للطلب" }, { en: "Direct labor for the order", ar: "العمالة المباشرة للطلب" }, { en: "Depreciation on factory building", ar: "إهلاك مبنى المصنع" }, { en: "Variable overhead for the order", ar: "أعباء التصنيع المتغيرة للطلب" } ], answer: 2, explanation: { en: "Depreciation on factory building is a fixed cost that does not change with the special order, so it is not a relevant cost.", ar: "إهلاك مبنى المصنع هو تكلفة ثابتة لا تتغير مع الطلب الخاص، لذا فهو ليس تكلفة ذات صلة." } },
+                { q: { en: "An opportunity cost is:", ar: "تكلفة الفرصة البديلة هي:" }, options: [ { en: "A cost recorded in the accounting books", ar: "تكلفة مسجلة في الدفاتر المحاسبية" }, { en: "The benefit forgone by choosing one alternative over another", ar: "العائد المتخلى عنه عن طريق اختيار بديل على آخر" }, { en: "A sunk cost", ar: "تكلفة غارقة" }, { en: "A fixed cost", ar: "تكلفة ثابتة" } ], answer: 1, explanation: { en: "An opportunity cost is the potential benefit that is given up when one alternative is selected over another. It is relevant for decision-making but not recorded in the books.", ar: "تكلفة الفرصة البديلة هي العائد المحتمل الذي يتم التخلي عنه عند اختيار بديل على آخر. وهي ذات صلة باتخاذ القرار ولكنها لا تُسجل في الدفاتر." } }
+            ]
+        },
+        {
+            title: { en: "Quiz 2: Income Statements (Absorption vs Variable)", ar: "الاختبار الثاني: قوائم الدخل (الاستيعابية مقابل المتغيرة)" },
+            questions: [
+                { q: { en: "In an Absorption Costing income statement, the key subtotal is:", ar: "في قائمة دخل التكلفة الاستيعابية، الرقم الفرعي الرئيسي هو:" }, options: [ { en: "Contribution Margin", ar: "هامش المساهمة" }, { en: "Gross Profit", ar: "إجمالي الربح" }, { en: "Net Sales", ar: "صافي المبيعات" }, { en: "Total Variable Costs", ar: "إجمالي التكاليف المتغيرة" } ], answer: 1, explanation: { en: "The Absorption Costing income statement highlights Gross Profit (Sales - Cost of Goods Sold) as the key subtotal.", ar: "قائمة دخل التكلفة الاستيعابية تُبرز إجمالي الربح (المبيعات - تكلفة البضاعة المباعة) كالرقم الفرعي الرئيسي." } },
+                { q: { en: "In a Variable Costing income statement, the key subtotal is:", ar: "في قائمة دخل التكلفة المتغيرة، الرقم الفرعي الرئيسي هو:" }, options: [ { en: "Gross Profit", ar: "إجمالي الربح" }, { en: "Contribution Margin", ar: "هامش المساهمة" }, { en: "Operating Profit", ar: "ربح التشغيل" }, { en: "Net Income", ar: "صافي الدخل" } ], answer: 1, explanation: { en: "The Variable Costing income statement highlights Contribution Margin (Sales - Total Variable Costs) as the key subtotal.", ar: "قائمة دخل التكلفة المتغيرة تُبرز هامش المساهمة (المبيعات - إجمالي التكاليف المتغيرة) كالرقم الفرعي الرئيسي." } },
+                { q: { en: "Gross Profit is calculated as:", ar: "إجمالي الربح يُحسب على النحو التالي:" }, options: [ { en: "Sales - Total Variable Costs", ar: "المبيعات - إجمالي التكاليف المتغيرة" }, { en: "Sales - Cost of Goods Sold", ar: "المبيعات - تكلفة البضاعة المباعة" }, { en: "Contribution Margin - Fixed Costs", ar: "هامش المساهمة - التكاليف الثابتة" }, { en: "Sales - All Expenses", ar: "المبيعات - جميع المصروفات" } ], answer: 1, explanation: { en: "Gross Profit = Sales - Cost of Goods Sold (which includes DM, DL, and both Variable and Fixed MOH under Absorption Costing).", ar: "إجمالي الربح = المبيعات - تكلفة البضاعة المباعة (والتي تشمل المواد المباشرة، العمالة المباشرة، وكل من أعباء التصنيع المتغيرة والثابتة في ظل التكلفة الاستيعابية)." } },
+                { q: { en: "Contribution Margin is calculated as:", ar: "هامش المساهمة يُحسب على النحو التالي:" }, options: [ { en: "Sales - Cost of Goods Sold", ar: "المبيعات - تكلفة البضاعة المباعة" }, { en: "Sales - Total Variable Costs (Manufacturing + S&A)", ar: "المبيعات - إجمالي التكاليف المتغيرة (تصنيع + بيع وإدارة)" }, { en: "Gross Profit - Fixed Costs", ar: "إجمالي الربح - التكاليف الثابتة" }, { en: "Sales - Fixed Costs", ar: "المبيعات - التكاليف الثابتة" } ], answer: 1, explanation: { en: "Contribution Margin = Sales - Total Variable Costs (including both variable manufacturing costs and variable selling & administrative costs).", ar: "هامش المساهمة = المبيعات - إجمالي التكاليف المتغيرة (بما في ذلك تكاليف التصنيع المتغيرة وتكاليف البيع والإدارة المتغيرة)." } },
+                { q: { en: "Under Absorption Costing, Cost of Goods Sold includes:", ar: "في ظل التكلفة الاستيعابية، تكلفة البضاعة المباعة تشمل:" }, options: [ { en: "Only Direct Materials", ar: "المواد المباشرة فقط" }, { en: "Direct Materials + Direct Labor + Variable MOH + Fixed MOH", ar: "المواد المباشرة + العمالة المباشرة + أعباء التصنيع المتغيرة + أعباء التصنيع الثابتة" }, { en: "Direct Materials + Direct Labor only", ar: "المواد المباشرة + العمالة المباشرة فقط" }, { en: "All costs including S&A", ar: "جميع التكاليف بما في ذلك البيع والإدارة" } ], answer: 1, explanation: { en: "Under Absorption Costing, COGS includes all manufacturing costs: DM + DL + Variable MOH + Fixed MOH.", ar: "في ظل التكلفة الاستيعابية، تكلفة البضاعة المباعة تشمل جميع تكاليف التصنيع: المواد المباشرة + العمالة المباشرة + أعباء التصنيع المتغيرة + أعباء التصنيع الثابتة." } },
+                { q: { en: "Under Variable Costing, the variable cost of goods sold includes:", ar: "في ظل التكلفة المتغيرة، تكلفة البضاعة المباعة المتغيرة تشمل:" }, options: [ { en: "DM + DL + Variable MOH", ar: "المواد المباشرة + العمالة المباشرة + أعباء التصنيع المتغيرة" }, { en: "DM + DL + Variable MOH + Fixed MOH", ar: "المواد المباشرة + العمالة المباشرة + أعباء التصنيع المتغيرة + أعباء التصنيع الثابتة" }, { en: "All manufacturing and S&A costs", ar: "جميع تكاليف التصنيع والبيع والإدارة" }, { en: "Only Direct Materials", ar: "المواد المباشرة فقط" } ], answer: 0, explanation: { en: "Under Variable Costing, variable COGS includes only variable manufacturing costs: DM + DL + Variable MOH. Fixed MOH is treated as a period cost.", ar: "في ظل التكلفة المتغيرة، تكلفة البضاعة المباعة المتغيرة تشمل فقط تكاليف التصنيع المتغيرة: المواد المباشرة + العمالة المباشرة + أعباء التصنيع المتغيرة. تُعامل أعباء التصنيع الثابتة كتكلفة فترة." } },
+                { q: { en: "In the Absorption Costing income statement, Selling and Administrative expenses are deducted from:", ar: "في قائمة دخل التكلفة الاستيعابية، تُخصم مصروفات البيع والإدارة من:" }, options: [ { en: "Sales to get Gross Profit", ar: "المبيعات للحصول على إجمالي الربح" }, { en: "Gross Profit to get Operating Profit", ar: "إجمالي الربح للحصول على ربح التشغيل" }, { en: "Contribution Margin to get Net Income", ar: "هامش المساهمة للحصول على صافي الدخل" }, { en: "They are not deducted", ar: "لا يتم خصمها" } ], answer: 1, explanation: { en: "In Absorption Costing: Sales - COGS = Gross Profit, then Gross Profit - S&A Expenses = Operating Profit.", ar: "في التكلفة الاستيعابية: المبيعات - تكلفة البضاعة المباعة = إجمالي الربح، ثم إجمالي الربح - مصروفات البيع والإدارة = ربح التشغيل." } },
+                { q: { en: "In the Variable Costing income statement, Fixed Manufacturing Overhead is deducted from:", ar: "في قائمة دخل التكلفة المتغيرة، تُخصم أعباء التصنيع الثابتة من:" }, options: [ { en: "Sales to get Gross Profit", ar: "المبيعات للحصول على إجمالي الربح" }, { en: "Contribution Margin to get Operating Profit", ar: "هامش المساهمة للحصول على ربح التشغيل" }, { en: "Cost of Goods Sold", ar: "تكلفة البضاعة المباعة" }, { en: "Variable Selling Expenses", ar: "مصروفات البيع المتغيرة" } ], answer: 1, explanation: { en: "In Variable Costing: Sales - Variable Costs = Contribution Margin, then Contribution Margin - Fixed Costs (including Fixed MOH and Fixed S&A) = Operating Profit.", ar: "في التكلفة المتغيرة: المبيعات - التكاليف المتغيرة = هامش المساهمة، ثم هامش المساهمة - التكاليف الثابتة (بما في ذلك أعباء التصنيع الثابتة والبيع والإدارة الثابتة) = ربح التشغيل." } },
+                { q: { en: "If Sales = $100,000, COGS = $60,000, and S&A = $15,000, what is the Operating Profit under Absorption Costing?", ar: "إذا كانت المبيعات = 100,000 دولار، تكلفة البضاعة المباعة = 60,000 دولار، والبيع والإدارة = 15,000 دولار، ما هو ربح التشغيل في ظل التكلفة الاستيعابية؟" }, options: [ { en: "$40,000", ar: "40,000 دولار" }, { en: "$25,000", ar: "25,000 دولار" }, { en: "$60,000", ar: "60,000 دولار" }, { en: "$15,000", ar: "15,000 دولار" } ], answer: 1, explanation: { en: "Gross Profit = 100,000 - 60,000 = 40,000. Operating Profit = 40,000 - 15,000 = $25,000.", ar: "إجمالي الربح = 100000 - 60000 = 40000. ربح التشغيل = 40000 - 15000 = 25,000 دولار." } },
+                { q: { en: "If Sales = $100,000, Variable Costs = $50,000, and Fixed Costs = $30,000, what is the Operating Profit under Variable Costing?", ar: "إذا كانت المبيعات = 100,000 دولار، التكاليف المتغيرة = 50,000 دولار، والتكاليف الثابتة = 30,000 دولار، ما هو ربح التشغيل في ظل التكلفة المتغيرة؟" }, options: [ { en: "$50,000", ar: "50,000 دولار" }, { en: "$20,000", ar: "20,000 دولار" }, { en: "$70,000", ar: "70,000 دولار" }, { en: "$30,000", ar: "30,000 دولار" } ], answer: 1, explanation: { en: "Contribution Margin = 100,000 - 50,000 = 50,000. Operating Profit = 50,000 - 30,000 = $20,000.", ar: "هامش المساهمة = 100000 - 50000 = 50000. ربح التشغيل = 50000 - 30000 = 20,000 دولار." } },
+                { q: { en: "In the Variable Costing income statement, Variable Selling and Administrative expenses are:", ar: "في قائمة دخل التكلفة المتغيرة، مصروفات البيع والإدارة المتغيرة هي:" }, options: [ { en: "Part of Cost of Goods Sold", ar: "جزء من تكلفة البضاعة المباعة" }, { en: "Deducted from Sales to get Contribution Margin", ar: "تُخصم من المبيعات للحصول على هامش المساهمة" }, { en: "Deducted from Contribution Margin to get Operating Profit", ar: "تُخصم من هامش المساهمة للحصول على ربح التشغيل" }, { en: "Not deducted at all", ar: "لا تُخصم أبداً" } ], answer: 1, explanation: { en: "In Variable Costing, ALL variable costs (both manufacturing and S&A) are deducted from Sales to arrive at Contribution Margin.", ar: "في التكلفة المتغيرة، جميع التكاليف المتغيرة (سواء التصنيعية أو البيع والإدارة) تُخصم من المبيعات للوصول إلى هامش المساهمة." } },
+                { q: { en: "Which of the following costs is treated as a Period Cost under Variable Costing but as a Product Cost under Absorption Costing?", ar: "أي من التكاليف التالية تُعامل كتكلفة فترة في ظل التكلفة المتغيرة ولكن كتكلفة منتج في ظل التكلفة الاستيعابية؟" }, options: [ { en: "Direct Materials", ar: "المواد المباشرة" }, { en: "Direct Labor", ar: "العمالة المباشرة" }, { en: "Fixed Manufacturing Overhead", ar: "أعباء التصنيع الثابتة" }, { en: "Variable Selling Expenses", ar: "مصروفات البيع المتغيرة" } ], answer: 2, explanation: { en: "Fixed MOH is the key difference: it is a product cost under Absorption Costing (included in inventory) but a period cost under Variable Costing (expensed immediately).", ar: "أعباء التصنيع الثابتة هي الفرق الجوهري: فهي تكلفة منتج في ظل التكلفة الاستيعابية (تُدرج في المخزون) ولكنها تكلفة فترة في ظل التكلفة المتغيرة (تُصرف فوراً)." } },
+                { q: { en: "Net Sales is calculated as:", ar: "صافي المبيعات يُحسب على النحو التالي:" }, options: [ { en: "Gross Sales - Sales Returns and Allowances - Sales Discounts", ar: "إجمالي المبيعات - مردودات ومسموحات المبيعات - خصومات المبيعات" }, { en: "Gross Sales + Sales Discounts", ar: "إجمالي المبيعات + خصومات المبيعات" }, { en: "Cost of Goods Sold + Gross Profit", ar: "تكلفة البضاعة المباعة + إجمالي الربح" }, { en: "Total Assets - Total Liabilities", ar: "إجمالي الأصول - إجمالي الالتزامات" } ], answer: 0, explanation: { en: "Net Sales = Gross Sales - Sales Returns and Allowances - Sales Discounts. This is the starting point for both income statement formats.", ar: "صافي المبيعات = إجمالي المبيعات - مردودات ومسموحات المبيعات - خصومات المبيعات. وهذا هو نقطة البداية لكلا تنسيقي قائمة الدخل." } },
+                { q: { en: "If a company sells 1,000 units at $50 each, with variable product cost of $20 per unit, what is the Contribution Margin?", ar: "إذا باعت الشركة 1,000 وحدة بسعر 50 دولار للوحدة، وتكلفة المنتج المتغيرة 20 دولار للوحدة، ما هو هامش المساهمة؟" }, options: [ { en: "$20,000", ar: "20,000 دولار" }, { en: "$30,000", ar: "30,000 دولار" }, { en: "$50,000", ar: "50,000 دولار" }, { en: "$10,000", ar: "10,000 دولار" } ], answer: 1, explanation: { en: "Sales = 1,000 × 50 = 50,000. Variable Costs = 1,000 × 20 = 20,000. Contribution Margin = 50,000 - 20,000 = $30,000.", ar: "المبيعات = 1000 × 50 = 50000. التكاليف المتغيرة = 1000 × 20 = 20000. هامش المساهمة = 50000 - 20000 = 30,000 دولار." } },
+                { q: { en: "Using the same data, if Fixed Costs = $15,000, what is the Operating Profit?", ar: "باستخدام نفس البيانات، إذا كانت التكاليف الثابتة = 15,000 دولار، ما هو ربح التشغيل؟" }, options: [ { en: "$30,000", ar: "30,000 دولار" }, { en: "$15,000", ar: "15,000 دولار" }, { en: "$20,000", ar: "20,000 دولار" }, { en: "$5,000", ar: "5,000 دولار" } ], answer: 1, explanation: { en: "Operating Profit = Contribution Margin - Fixed Costs = 30,000 - 15,000 = $15,000.", ar: "ربح التشغيل = هامش المساهمة - التكاليف الثابتة = 30000 - 15000 = 15,000 دولار." } },
+                { q: { en: "The Contribution Margin per unit is:", ar: "هامش المساهمة للوحدة هو:" }, options: [ { en: "Selling Price per unit - Variable Cost per unit", ar: "سعر البيع للوحدة - التكلفة المتغيرة للوحدة" }, { en: "Selling Price per unit - Fixed Cost per unit", ar: "سعر البيع للوحدة - التكلفة الثابتة للوحدة" }, { en: "Total Sales - Total Costs", ar: "إجمالي المبيعات - إجمالي التكاليف" }, { en: "Gross Profit / Units Sold", ar: "إجمالي الربح / الوحدات المباعة" } ], answer: 0, explanation: { en: "Contribution Margin per unit = Selling Price per unit - Variable Cost per unit. It shows how much each unit contributes to covering fixed costs and generating profit.", ar: "هامش المساهمة للوحدة = سعر البيع للوحدة - التكلفة المتغيرة للوحدة. وهو يُظهر مقدار مساهمة كل وحدة في تغطية التكاليف الثابتة وتوليد الربح." } },
+                { q: { en: "If Selling Price = $50 and Variable Cost per unit = $30, what is the Contribution Margin per unit?", ar: "إذا كان سعر البيع = 50 دولار والتكلفة المتغيرة للوحدة = 30 دولار، ما هو هامش المساهمة للوحدة؟" }, options: [ { en: "$50", ar: "50 دولار" }, { en: "$30", ar: "30 دولار" }, { en: "$20", ar: "20 دولار" }, { en: "$80", ar: "80 دولار" } ], answer: 2, explanation: { en: "Contribution Margin per unit = 50 - 30 = $20 per unit.", ar: "هامش المساهمة للوحدة = 50 - 30 = 20 دولار للوحدة." } },
+                { q: { en: "In a Variable Costing income statement, Fixed Selling and Administrative expenses are:", ar: "في قائمة دخل التكلفة المتغيرة، مصروفات البيع والإدارة الثابتة هي:" }, options: [ { en: "Part of Cost of Goods Sold", ar: "جزء من تكلفة البضاعة المباعة" }, { en: "Deducted from Sales to get Contribution Margin", ar: "تُخصم من المبيعات للحصول على هامش المساهمة" }, { en: "Deducted from Contribution Margin to get Operating Profit", ar: "تُخصم من هامش المساهمة للحصول على ربح التشغيل" }, { en: "Added to Variable Costs", ar: "تُضاف إلى التكاليف المتغيرة" } ], answer: 2, explanation: { en: "In Variable Costing, Fixed S&A (along with Fixed MOH) are period costs deducted from Contribution Margin to arrive at Operating Profit.", ar: "في التكلفة المتغيرة، البيع والإدارة الثابتة (مع أعباء التصنيع الثابتة) هي تكاليف فترة تُخصم من هامش المساهمة للوصول إلى ربح التشغيل." } },
+                { q: { en: "The primary difference between the Absorption and Variable Costing income statements is:", ar: "الفرق الجوهري بين قائمتي دخل التكلفة الاستيعابية والمتغيرة هو:" }, options: [ { en: "The treatment of variable selling costs", ar: "معالجة تكاليف البيع المتغيرة" }, { en: "The treatment of Fixed Manufacturing Overhead", ar: "معالجة أعباء التصنيع الثابتة" }, { en: "The treatment of direct materials", ar: "معالجة المواد المباشرة" }, { en: "There is no difference", ar: "لا يوجد فرق" } ], answer: 1, explanation: { en: "The key difference is how Fixed MOH is treated: as a product cost (in inventory) under Absorption Costing, or as a period cost (expensed immediately) under Variable Costing.", ar: "الفرق الجوهري هو كيفية معالجة أعباء التصنيع الثابتة: كتكلفة منتج (في المخزون) في ظل التكلفة الاستيعابية، أو كتكلفة فترة (تُصرف فوراً) في ظل التكلفة المتغيرة." } },
+                { q: { en: "If a company has Sales of $200,000, Variable Product Cost of $80,000, Variable S&A of $20,000, Fixed MOH of $40,000, and Fixed S&A of $30,000, what is the Operating Profit under Variable Costing?", ar: "إذا كانت لدى الشركة مبيعات بقيمة 200,000 دولار، تكلفة المنتج المتغيرة 80,000 دولار، البيع والإدارة المتغيرة 20,000 دولار، أعباء التصنيع الثابتة 40,000 دولار، والبيع والإدارة الثابتة 30,000 دولار، ما هو ربح التشغيل في ظل التكلفة المتغيرة؟" }, options: [ { en: "$30,000", ar: "30,000 دولار" }, { en: "$60,000", ar: "60,000 دولار" }, { en: "$100,000", ar: "100,000 دولار" }, { en: "$70,000", ar: "70,000 دولار" } ], answer: 0, explanation: { en: "Contribution Margin = 200,000 - (80,000 + 20,000) = 100,000. Operating Profit = 100,000 - (40,000 + 30,000) = $30,000.", ar: "هامش المساهمة = 200000 - (80000 + 20000) = 100000. ربح التشغيل = 100000 - (40000 + 30000) = 30,000 دولار." } }
+            ]
+        }
+    ];
+
+    function toggleLanguage(btn) {
+        btn.classList.add('animate');
+        setTimeout(() => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            
+            document.getElementById('main-title').innerText = translations[currentLang].mainTitle;
+            document.getElementById('sub-title').innerText = translations[currentLang].subTitle;
+            document.getElementById('fab-tooltip').innerText = translations[currentLang].fabTooltip;
+            document.getElementById('submit-btn').innerText = translations[currentLang].submitBtn;
+            document.getElementById('footer-text').innerText = translations[currentLang].footer;
+            
+            document.getElementById('tab-0').innerText = currentLang === 'en' ? 'Quiz 1' : 'الاختبار 1';
+            document.getElementById('tab-1').innerText = currentLang === 'en' ? 'Quiz 2' : 'الاختبار 2';
+
+            renderQuiz();
+            setTimeout(() => btn.classList.remove('animate'), 400);
+        }, 300);
+    }
+
+    function switchQuiz(index) {
+        currentQuizIndex = index;
+        document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+            btn.classList.toggle('active', i === index);
+        });
+        document.getElementById('result-box').style.display = 'none';
+        renderQuiz();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderQuiz() {
+        const quiz = quizzes[currentQuizIndex];
+        document.getElementById('quiz-title').innerText = quiz.title[currentLang];
+        
+        const form = document.getElementById('quiz-form');
+        form.innerHTML = '';
+
+        quiz.questions.forEach((q, qIndex) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, oIndex) => {
+                optionsHTML += `
+                    <label class="option-card" id="label-${currentQuizIndex}-${qIndex}-${oIndex}" onclick="selectOption(this, ${qIndex})">
+                        <input type="radio" name="q${currentQuizIndex}_${qIndex}" value="${oIndex}">
+                        <div class="custom-radio"></div>
+                        <span class="option-text">${opt[currentLang]}</span>
+                    </label>
+                `;
+            });
+
+            block.innerHTML = `
+                <div class="question-text">
+                    <span class="question-number">${qIndex + 1}</span>
+                    ${q.q[currentLang]}
+                </div>
+                <div class="options">${optionsHTML}</div>
+                <div class="explanation-box" id="exp-${currentQuizIndex}-${qIndex}">
+                    <div class="explanation-header">
+                        <span class="explanation-icon">💡</span>
+                        <span>${translations[currentLang].explainTitle}</span>
+                    </div>
+                    <div class="explanation-text">${q.explanation[currentLang]}</div>
+                </div>
+            `;
+            form.appendChild(block);
+        });
+
+        // Restore previous answers
+        if (userAnswers[currentQuizIndex]) {
+            Object.keys(userAnswers[currentQuizIndex]).forEach(qIndex => {
+                const selectedValue = userAnswers[currentQuizIndex][qIndex];
+                const radio = document.querySelector(`input[name="q${currentQuizIndex}_${qIndex}"][value="${selectedValue}"]`);
+                if (radio) {
+                    radio.checked = true;
+                    const label = document.getElementById(`label-${currentQuizIndex}-${qIndex}-${selectedValue}`);
+                    if (label) label.classList.add('selected');
+                }
+            });
+        }
+
+        if (quizSubmitted[currentQuizIndex]) {
+            applySubmittedState();
+        }
+    }
+
+    function selectOption(element, qIndex) {
+        const parent = element.parentElement;
+        parent.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+        element.classList.add('selected');
+        element.querySelector('input').checked = true;
+        
+        if (!userAnswers[currentQuizIndex]) userAnswers[currentQuizIndex] = {};
+        userAnswers[currentQuizIndex][qIndex] = parseInt(element.querySelector('input').value);
+    }
+
+    function applySubmittedState() {
+        const quiz = quizzes[currentQuizIndex];
+        let score = 0;
+        
+        quiz.questions.forEach((q, qIndex) => {
+            const selected = userAnswers[currentQuizIndex]?.[qIndex];
+            
+            q.options.forEach((_, oIndex) => {
+                const label = document.getElementById(`label-${currentQuizIndex}-${qIndex}-${oIndex}`);
+                if (label) {
+                    label.classList.remove('correct', 'incorrect');
+                    if (oIndex === q.answer) label.classList.add('correct');
+                    if (selected === oIndex && selected !== q.answer) label.classList.add('incorrect');
+                }
+            });
+
+            const expBox = document.getElementById(`exp-${currentQuizIndex}-${qIndex}`);
+            if (expBox) {
+                expBox.style.display = 'block';
+                setTimeout(() => expBox.classList.add('show'), 50 + (qIndex * 50));
+            }
+
+            if (selected === q.answer) score++;
+        });
+
+        const resultBox = document.getElementById('result-box');
+        const scoreDisplay = document.getElementById('score-display');
+        const resultMsg = document.getElementById('result-msg');
+
+        resultBox.style.display = 'block';
+        scoreDisplay.innerText = `${score} / ${quiz.questions.length}`;
+        /* 🎯 EBRA — إرسال عند تسليم المستخدم فقط (renderQuiz لا يعيد الإرسال) */
+        if (window.EBRA && window.EBRA.trackScore) {
+            window.EBRA.trackScore(score, quiz.questions.length, "Cost Accounting — S4 Quiz " + (currentQuizIndex + 1));
+        }
+        
+        if (score >= quiz.questions.length * 0.8) {
+            resultBox.className = 'result-box correct';
+            resultMsg.innerText = translations[currentLang].resultCorrect;
+        } else {
+            resultBox.className = 'result-box incorrect';
+            resultMsg.innerText = translations[currentLang].resultIncorrect;
+        }
+    }
+
+    function submitQuiz() {
+        quizSubmitted[currentQuizIndex] = true;
+        applySubmittedState();
+        document.getElementById('result-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    renderQuiz();
+</script>
+
+<!-- 🎯 جزء تتبع الدرجات (نائم في غير الكويزات) -->
+<script>
+(function () {
+  var TRACK_URL = "https://script.google.com/macros/s/AKfycbzWhqHm8sl_fogZTB_E_WEgBwJjke3qZ574Yj8f8gI9_KYUelzA4-EI2azlvFE96YlC/exec";
+  var MAX_SCORE = 10;   // ← العظمى الافتراضية عندما لا تذكر النتيجةُ علتها
+  var QUIZZES = [
+    // { selector: "#q1-result", label: "Ch1 Quiz 1" },
+    // { selector: "#q2-result", label: "Ch1 Quiz 2" },
+  ];
+
+  var vid;
+  try {
+    var pm = location.search.match(/[?&]ebra_vid=([^&]+)/);
+    if (pm) {
+      vid = decodeURIComponent(pm[1]);
+      localStorage.setItem("ebra_vid", vid);
+    } else {
+      vid = localStorage.getItem("ebra_vid");
+      if (!vid) {
+        vid = "v-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 9);
+        localStorage.setItem("ebra_vid", vid);
+      }
+    }
+  } catch (e) { vid = "v-na"; }
+
+  function post(score, max, label) {
+    fetch(TRACK_URL, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        type: "score",
+        visitorId: vid,
+        quiz: label || "Quiz",
+        score: score,
+        max: max,
+        percent: Math.round((score / max) * 100),
+        page: location.origin + location.pathname
+      })
+    }).catch(function () {});
+  }
+
+  function parseScore(txt) {
+    txt = txt || "";
+    var m = txt.match(/(\d+(?:[.,]\d+)?)\s*(?:\/|من|out of|-)\s*(\d+)/) || txt.match(/(\d+(?:[.,]\d+)?)/);
+    if (!m) return null;
+    return {
+      score: parseFloat(m[1].replace(",", ".")),
+      max: m[2] ? parseFloat(m[2]) : null
+    };
+  }
+
+  /* 3) اليدوي */
+  var lastManual = {};
+  window.EBRA = window.EBRA || {};
+  window.EBRA.trackScore = function (score, max, label) {
+    var k = label + "|" + score + "/" + max;
+    var now = Date.now();
+    if (lastManual[k] && now - lastManual[k] < 3000) return;
+    lastManual[k] = now;
+    post(Number(score), Number(max) || MAX_SCORE, label);
+  };
+
+  /* 1) + 2) المسح التلقائي */
+  var lastSel = {};
+  function scan() {
+    for (var i = 0; i < QUIZZES.length; i++) {
+      var qz = QUIZZES[i];
+      var el = document.querySelector(qz.selector);
+      if (!el) continue;
+      var p = parseScore(el.textContent);
+      if (!p) continue;
+      if (lastSel[qz.selector] === p.score) continue;   // إعادة المحاولة بنفس الدرجة لا تُكرر
+      lastSel[qz.selector] = p.score;
+      post(p.score, p.max || MAX_SCORE, qz.label);
+    }
+    var els = document.querySelectorAll("[data-ebra-quiz]");
+    for (var j = 0; j < els.length; j++) {
+      var el2 = els[j];
+      if (el2.getAttribute("data-ebra-done")) continue;
+      var p2 = parseScore(el2.textContent);
+      if (!p2) continue;
+      el2.setAttribute("data-ebra-done", "1");
+      post(p2.score, p2.max || MAX_SCORE, el2.getAttribute("data-ebra-quiz"));
+    }
+  }
+
+  var timer = null;
+  function queueScan() {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(scan, 400);
+  }
+  try {
+    var mo = new MutationObserver(queueScan);
+    mo.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  } catch (e) {
+    setInterval(queueScan, 1500);
+  }
+  document.addEventListener("DOMContentLoaded", queueScan);
+  window.addEventListener("load", queueScan);
+})();
+</script>
+
+<!-- 📡 جزء تتبع الزيارات -->
+<script>
+(function () {
+  var TRACK_URL = "https://script.google.com/macros/s/AKfycbzWhqHm8sl_fogZTB_E_WEgBwJjke3qZ574Yj8f8gI9_KYUelzA4-EI2azlvFE96YlC/exec";
+  var vid;
+  try {
+    var pm = location.search.match(/[?&]ebra_vid=([^&]+)/);
+    if (pm) {
+      vid = decodeURIComponent(pm[1]);
+      localStorage.setItem("ebra_vid", vid);
+    } else {
+      vid = localStorage.getItem("ebra_vid");
+      if (!vid) {
+        vid = "v-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 9);
+        localStorage.setItem("ebra_vid", vid);
+      }
+    }
+  } catch (e) { vid = "v-na"; }
+  fetch(TRACK_URL, {
+    method: "POST",
+    mode: "cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({
+      visitorId: vid,
+      page: location.origin + location.pathname,
+      referrer: document.referrer || "Direct",
+      language: navigator.language || "",
+      screen: window.screen ? (screen.width + "x" + screen.height) : "",
+      ua: navigator.userAgent
+    })
+  }).catch(function () {});
+})();
+</script>
+
+</body>
+</html>
